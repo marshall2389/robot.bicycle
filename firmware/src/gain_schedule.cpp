@@ -43,6 +43,17 @@ float GainSchedule::rate() const
   return rate_;
 }
 
+float GainSchedule::min_rate()
+{
+  // first rate in schedule_ is most negative
+  return schedule_.begin()->rate;
+}
+
+float GainSchedule::max_rate()
+{
+  return schedule_.rbegin()->rate;
+}
+
 bool GainSchedule::set_sample(Sample& s)
 {
   s_ = &s;

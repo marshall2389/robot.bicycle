@@ -4,6 +4,7 @@
 #include "chprintf.h"
 #include "control_loop.h"
 #include "constants.h"
+#include "gain_schedule.h"
 #include "rear_motor_controller.h"
 #include "SystemState.h"
 #include "textutilities.h"
@@ -42,10 +43,16 @@ RearMotorController::~RearMotorController()
   instances[rear_wheel] = 0;
 }
 
-void RearMotorController::set_reference(float speed)
+bool RearMotorController::set_reference(float speed)
 {
-  float theta_R_dot_command_new = speed / -constants::wheel_radius;
-  theta_R_dot_command_ = theta_R_dot_command_new;
+  float rate = speed / -constants::wheel_radius;
+  // only allow rates included in the gain schedule for fork control
+  if (rate > control::GainSchedule::min_rate() && rate <
+          control::GainSchedule::max_rate()) {
+    theta_R_dot_command_ = rate;
+    return true;
+  }
+  return false;
 }
 
 void RearMotorController::disable()

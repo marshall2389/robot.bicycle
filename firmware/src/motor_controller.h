@@ -11,7 +11,7 @@ class MotorController {
   MotorController(const char * name) : name_(name) {};
   const char * name() { return name_; }
 
-  virtual void set_reference(float reference) = 0;
+  virtual bool set_reference(float reference) = 0;
   virtual void disable() = 0;
   virtual void enable() = 0;
   virtual void update(Sample & s) = 0;

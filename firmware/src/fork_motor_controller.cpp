@@ -13,6 +13,9 @@ const uint8_t ccr_channel = 2;                 // PWM Channel 2
 const float max_current = 6.0f;                // Copley Controls ACJ-055-18
 const float torque_constant = 106.459f * constants::Nm_per_ozfin;
 const float max_steer_angle = 45.0f * constants::rad_per_degree;
+const float max_yaw_rate_command = 2.0f;       // rad/s
+const float min_yaw_rate_command = -max_yaw_rate_command;
+
 ForkMotorController::ForkMotorController()
   : MotorController("Fork"),
   e_(STM32_TIM3, constants::fork_counts_per_revolution),
@@ -36,9 +39,13 @@ ForkMotorController::~ForkMotorController()
   instances[fork] = 0;
 }
 
-void ForkMotorController::set_reference(float yaw_rate)
+bool ForkMotorController::set_reference(float yaw_rate)
 {
-  yaw_rate_command_ = yaw_rate;
+  if (yaw_rate >= min_yaw_rate_command && yaw_rate <= max_yaw_rate_command) {
+    yaw_rate_command_ = yaw_rate;
+    return true;
+  }
+  return false;
 }
 
 void ForkMotorController::set_estimation_threshold(float speed)

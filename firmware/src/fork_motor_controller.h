@@ -17,7 +17,7 @@ class ForkMotorController : public MotorController {
  public:
   ForkMotorController();
   ~ForkMotorController();
-  virtual void set_reference(float yaw_rate);
+  virtual bool set_reference(float yaw_rate);
   virtual void disable();
   virtual void enable();
   virtual void update(Sample & s);

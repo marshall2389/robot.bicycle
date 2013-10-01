@@ -1,5 +1,6 @@
 #include "ch.h"
 #include "chprintf.h"
+#include "gain_schedule.h"
 #include "motor_controller.h"
 #include "textutilities.h"
 
@@ -13,9 +14,12 @@ void MotorController::set_reference_shell(BaseSequentialStream *chp, int argc, c
       disable();
       chprintf(chp, "%s motor control disabled.\r\n", name());
   } else if (argc == 1) {
-      enable();
-      set_reference(tofloat(argv[0]));
-      chprintf(chp, "%s motor control enabled and set.\r\n", name());
+      if (set_reference(tofloat(argv[0]))) {
+        enable();
+        chprintf(chp, "%s motor control enabled and set.\r\n", name());
+      } else {
+        chprintf(chp, "Invalid input for %s motor control.\r\n", name());
+      }
   } else {
     chprintf(chp, "Invalid usage.\r\n");
   }

@@ -15,7 +15,7 @@ class RearMotorController : public MotorController {
  public:
   RearMotorController();
   ~RearMotorController();
-  virtual void set_reference(float speed);
+  virtual bool set_reference(float speed);
   virtual void disable();
   virtual void enable();
   virtual void update(Sample & s);
