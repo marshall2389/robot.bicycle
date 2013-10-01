@@ -41,15 +41,15 @@ void compute_state_space_matrices(const design_parameters & params,
     m.C_yaw_rate = Eigen::MatrixXd::Zero(1, 4);
     m.C_yaw_rate << A_full(0, 1), A_full(0, 2), A_full(0, 7), A_full(0, 8);
 
-    matlab.put_Matrix(m.A, "A");
+    matlab.put_Matrix(m.A, "A");  //C++ code for interacting with MATLAB
     matlab.put_Matrix(m.B, "B");
     Eigen::MatrixXd Ts_matrix(1, 1);  Ts_matrix << params.Ts;
     matlab.put_Matrix(Ts_matrix, "Ts");
-    matlab.eval("sys_c = ss(A, B, eye(4), zeros(4, 1));");
+    matlab.eval("sys_c = ss(A, B, eye(4), zeros(4, 1));"); //matlab.eval sends the string to be evaluated in MATLAB
     matlab.eval("sys_d = c2d(sys_c, Ts, 'tustin');");
     matlab.eval("A_d = sys_d.A;");
     matlab.eval("B_d = sys_d.B;");
-    m.A_d = matlab.get_Matrix("A_d");
+    m.A_d = matlab.get_Matrix("A_d"); //gets matrix A_d from MATLAB and stores it as m.A_d (a C++ matrix)
     m.B_d = matlab.get_Matrix("B_d");
 
     Eigen::EigenSolver<Eigen::MatrixXd> plant_c(m.A);
