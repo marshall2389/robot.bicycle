@@ -119,7 +119,7 @@ static void cmd_threads(BaseSequentialStream *chp, int argc, char *argv[]) {
 }
 
 static const ShellCommand commands[] = {
-  {"collect", hardware::ControlLoop::shell_command}, // enable/disable data collection and control
+  {"collect", hardware::ControlLoop::shell_command},  // enable/disable data collection and control
   {"disable", SystemCommands::disable_controllers},
   {"reset", SystemCommands::reset},
   {"threads", cmd_threads},
@@ -130,10 +130,10 @@ static const ShellCommand commands[] = {
   {"c_thresh", hardware::ForkMotorController::set_control_delay_shell},
   {"thresh", hardware::ForkMotorController::set_thresholds_shell},
   {"disturb", hardware::ForkMotorController::disturb_shell},
-  {"speed_limit", hardware::RearMotorController::speed_limit_shell},
+  {"sx", hardware::RearMotorController::speed_limit_shell},  // speed limit
   {"l_thresh", hardware::ControlLoop::set_lean_threshold_shell},
-  {"yaw_rate", hardware::set_reference_shell<hardware::fork>},
-  {"speed", hardware::set_reference_shell<hardware::rear_wheel>},
+  {"yr", hardware::set_reference_shell<hardware::fork>},  // yaw-rate
+  {"sp", hardware::set_reference_shell<hardware::rear_wheel>},  // speed
   {NULL, NULL}
 };
 
