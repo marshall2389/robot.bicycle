@@ -53,8 +53,8 @@ class GainSchedule {
  public:
   GainSchedule();
   float rate() const;
-  float min_rate() const;
-  float max_rate() const;
+  static float min_rate();
+  static float max_rate();
   bool set_sample(Sample& s);
   void set_state(const vector_t<state_size>& state);
   float compute_updated_torque(float torque_prev);
