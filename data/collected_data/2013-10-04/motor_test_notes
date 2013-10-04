@@ -1,0 +1,12 @@
+mt07: 
+-Rear wheel was unresponsive in previous runs.  Noticed black connection thing on upper right of rear wheel controller was angled out.  Pressed it back in.  Rear wheel spins.
+-Motor ran for a while at +01.00 with a distinct oscillation.  The oscillation decreased in amplitude then slowly because continuous.  The motor slowed and then died.  Voltage stayed around 50V.  At end there is a motor fault and the rear motor controller LED is red.
+-Speed decays after 48 seconds.  Torque goes to -160.  The rear wheel motor fault toggles on and off then goes high.
+
+mt08: 
+-Pressed the black thing all the way flush with the blue controller housing.
+-Voltage flunctuating between 50.something and 49.something.  Let it run for a while, applied a load for a while, after this the wheel slowed and spun continuously, controller LED is flashing, LED now solid red, wheel spinning slow with a humming/grinding sound.  Wheel stopped spinning.
+-This run has a truncated message and missing data.  'DecodeError: Truncated message.'  Looking at the system state rear motor flags shows that the rear_wheel_motor_fault is toggling off and on.  The I2C bus error and software timeout go high but they both recover afterwards.  Because the data is cut short we can't look at the decrease in wheel speed at the end that we observed.
+
+
+rear_wheel_motor_fault fluncuates between high and low.  When it starts to fluncuate really fast is when the wheel speed is decreasing.  

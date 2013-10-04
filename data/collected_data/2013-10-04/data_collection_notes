@@ -1,0 +1,46 @@
+RUN DESCRIPTIONS:
+run001:
+Straight for 10 meters at 2m/s. No problems.
+
+run002:
+2m/s, yr_c of 0.4, 6-8 circles. No problems except no data logged.
+
+run003:
+2m/s, straight, right, straight, left, stop.  No problems.
+
+run004:
+2m/s, straight, right 180, straight, left >720 then sensors stopped and bike fell
+
+run005: saved as samples.dat
+no data
+
+run006:
+
+
+
+
+
+
+
+RUN 12:
+first decrease 259s
+hard drop 269.5s
+
+RUN 11:
+yaw rate commands:
+to 0.50 at  29.1s
+to 0.55 at  73.8s
+to 0.60 at  90.0s
+to 0.65 at 117.3s
+to 0.70 at 135.1s
+to 0.75 at 153.3s
+to 0.60 at 203.4s
+
+RUN 4:
+mean steer torque is roughly 0.65 when turning left and -0.4 when turning right.
+
+NOTES:
+As lean angle increases, lean and velocity oscillations increase in amplitude.  They are in-phase.  During this time, desired steer torque and RW torque are also in-phase.  The yaw rate and speed controllers would both be working to drive the bike to the commanded rw and speed, respectively.  Luke's hunch: If the sum of the currents required for both motors gets to the point where the battery cannot maintain it's voltage then... failure.
+
+NO-DATA RUNS:
+Could be due to bad SD cards.
