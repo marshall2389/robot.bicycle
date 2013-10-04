@@ -9,24 +9,29 @@ run003:
 2m/s, straight, right, straight, left, stop.  No problems.
 
 run004:
-2m/s, straight, right 180, straight, left >720 then sensors stopped and bike fell
+2m/s, straight, right 180, straight, left >720 then sensors stopped and bike fell.
+mean steer torque is roughly 0.65 when turning left and -0.4 when turning right.
 
 run005: saved as samples.dat
 no data
 
 run006:
+1.5m/s, circle, didn't balance initially.
 
+run007:
+straight, 2 down to 1.5 down to 1, all ok. hit a bump in the middle at 1.5m/s
 
+run008:
+2 down to 1.5, turns at yr_c of +-0.4. drove all over the place.  no data. end with 286 errors.
 
+run009:
+2m/s.  start at yr_c of 0.4 then upped to 0.8 then crash.  Bike turned too hard into the turn, over corrected coming out, crashed.
 
+run010:
+2m/s.  didn't intially balance.
 
-
-
-RUN 12:
-first decrease 259s
-hard drop 269.5s
-
-RUN 11:
+run 011:
+2m/s.  Increased yr_c 0.4 to 0.75 step by step.
 yaw rate commands:
 to 0.50 at  29.1s
 to 0.55 at  73.8s
@@ -35,12 +40,30 @@ to 0.65 at 117.3s
 to 0.70 at 135.1s
 to 0.75 at 153.3s
 to 0.60 at 203.4s
+motor issue causes fall at end.  See notes at bottom of this file.
 
-RUN 4:
-mean steer torque is roughly 0.65 when turning left and -0.4 when turning right.
+Battery check: 12.76 12.77 12.74 12.77 volts
+hard reset of board
+
+run 012:
+1.8m/s.  Mix of straight and right turns.  Ends with motor problem.  Motor rattling audible after yr_c changed to 0.15
+
+run 013:
+data cut off?  1.8m/s straight then turn of 0.14.  ended with 748 errors
+
+run 014:
+rode all over.  ended with motor problem.  no data.  ended with 564 errors.
+
+Battery check: all at 12.8V, board battery at 8.3V
 
 NOTES:
 As lean angle increases, lean and velocity oscillations increase in amplitude.  They are in-phase.  During this time, desired steer torque and RW torque are also in-phase.  The yaw rate and speed controllers would both be working to drive the bike to the commanded rw and speed, respectively.  Luke's hunch: If the sum of the currents required for both motors gets to the point where the battery cannot maintain it's voltage then... failure.
 
+
 NO-DATA RUNS:
 Could be due to bad SD cards.
+
+
+git add 'pathtothisfile'
+git commit
+git push origin cmd_changes
