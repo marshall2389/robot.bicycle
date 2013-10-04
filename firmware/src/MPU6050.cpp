@@ -44,8 +44,15 @@ bool MPU6050::acquire_data(Sample & s) const
                                        reinterpret_cast<uint8_t *>(ar),
                                        14, timeout_);
 
-  if (!checkTransmission(res, s))
+  if (!checkTransmission(res, s)) {
+    if (res == RDY_TIMEOUT) {
+      // As stated in i2c_lld.c, driver must be stopped and restarted since the
+      // bus state is unknown.
+      i2cStop(i2c_);
+      i2cStart(i2c_, &i2cfg_);
+    }
     return false;
+  }
 
   // Reverse bytes in each 16-bit integer because MPU-6050 storage is
   // big-endian, so bytes come out MSB then LSB, but STM32 is little endian, so
@@ -123,7 +130,6 @@ bool MPU6050::checkTransmission(msg_t res, Sample & s)
     s.system_state |= (i2cGetErrors(&I2CD2) << 16);
     if (res == RDY_TIMEOUT)
       s.system_state |= systemstate::I2C_Software_Timeout;
-
     return false;
   }
   return true;

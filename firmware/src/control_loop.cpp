@@ -163,6 +163,8 @@ msg_t ControlLoop::exec(const char * file_name)
   logging::SampleBuffer sample_buffer(file_name);
   Sample s;
   memset(&s, 0, sizeof(s));
+  InvensenseMPU6050 mpu6050;
+  memset(&mpu6050, 0, sizeof(mpu6050));
   s.bike_state = BikeState::STARTUP;
 
   systime_t time = chTimeNow();     // Initial time
@@ -173,7 +175,13 @@ msg_t ControlLoop::exec(const char * file_name)
     // Begin pre control data collection
     s.system_time = STM32_TIM5->CNT;
     s.loop_count = i;
-    imu_.acquire_data(s);
+
+    // Use previous imu data if data acquisition fails.
+    if (imu_.acquire_data(s))
+      mpu6050 = s.mpu6050;
+    else
+      s.mpu6050 = mpu6050;
+
     s.encoder.front_wheel = front_wheel_encoder_.get_angle();
     s.system_state |= systemstate::CollectionEnabled;
     set_gyro_lean(s);
